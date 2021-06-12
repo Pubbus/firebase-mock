@@ -22,6 +22,7 @@ function MockFirestoreQuery(path, data, parent, name) {
   this.orderedProperties = [];
   this.orderedDirections = [];
   this.limited = 0;
+  this.batchSize = 0;
   this.buildStartFinder = function () { return function () { return true; }; };
   this._setData(data);
 }
@@ -144,6 +145,12 @@ MockFirestoreQuery.prototype.orderBy = function (property, direction) {
   query.orderedProperties.push(property);
   query.orderedDirections.push(direction || 'asc');
 
+  return query;
+};
+
+MockFirestoreQuery.prototype.offset = function (offset) {
+  var query = this.clone();
+  query.batchSize = offset;
   return query;
 };
 
